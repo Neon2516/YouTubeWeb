@@ -1,0 +1,31 @@
+{%load static%}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Сервис анализа Youtube канала</title>
+    <link rel="stylesheet" href="{%static 'youtube/css/youtube.css'%}">
+</head>
+<body>
+    <div class="container">
+        <div style="text-align: center; font-size: 36px; font-weight: bold; color: #0069d9; margin-bottom: 20px;">
+          Сервис анализа YouTube канала
+        </div>
+        <div style="text-align: center;">
+
+            <form action="{% url 'analysisChannel' %}" method="POST">
+                {% csrf_token %}
+                <input type="text" name="link_channel">
+              <button type="submit">Отправить</button>
+            </form>
+        </div>
+        <div style="text-align: center; font-size: 18px; font-weight: bold; color: #0069d9; margin-top: 20px;">
+            Введите ссылку на канал, чтобы произвести его анализ
+        </div>
+
+    </div>
+</body>
+</html>

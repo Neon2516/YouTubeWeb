@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализ канала</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+        .video-wrapper {
+            margin: 0 20px;
+            text-align: center;
+        }
+        .video-caption {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 5px 10px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1 style="text-align: center;">Название канала: {{name}}</h1>
+    </div>
+
+    <div>
+        <canvas id="myPieChart"></canvas>
+
+        <script>
+            // Используйте переданные из Python данные
+            var subscribers = {{ subscribers }};
+            var averageViews = {{ average_views }};
+            var subscribersPercent = {{ subscribers_percent }};
+            var averageViewsPercent = {{ average_views_percent }};
+
+            // Данные из Python
+            var dataFromPython = {
+                labels: ["Количество подписчиков (" + subscribersPercent.toFixed(2) + "%)", "Среднее количество просмотров (" + averageViewsPercent.toFixed(2) + "%)"],
+                datasets: [{
+                    label: 'Данные',
+                    data: [subscribers, averageViews], // Пример данных
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)', // Цвета для каждой категории
+                        'rgba(54, 162, 235, 0.7)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)', // Цвета границ для каждой категории
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            // Конфигурация диаграммы
+            var options = {
+                responsive: true,
+                maintainAspectRatio: false,
+                title: {
+                    display: true,
+                    text: 'Круговая диаграмма'
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            };
+
+            // Создание круговой диаграммы
+            var ctx = document.getElementById('myPieChart').getContext('2d');
+            var myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: dataFromPython,
+                options: options
+            });
+        </script>
+    </div>
+    <div>
+        <div style="width: 80%; margin: auto;">
+        <!-- Создаем контейнер для диаграммы -->
+        <canvas id="myChart1"></canvas>
+        </div>
+
+        <script>
+            // Получаем контекст рисования для элемента canvas
+            var ctx = document.getElementById('myChart1').getContext('2d');
+
+            // Массив с данными для диаграммы (здесь можно использовать ваши данные)
+            var data = {{counts_views}};
+
+            // Создаем новый объект Chart и передаем контекст рисования
+            var myChart = new Chart(ctx, {
+                type: 'line', // Указываем тип диаграммы (линейная)
+                data: {
+                    labels: Array.from({length: data.length}, (_, i) => i + 1), // Метки оси X (1, 2, 3, ..., 50)
+                    datasets: [{
+                        label: 'Изменение количества просмотров', // Название набора данных
+                        data: data, // Данные для построения диаграммы
+                        borderColor: 'blue', // Цвет линии
+                        borderWidth: 1, // Толщина линии
+                        fill: false // Не заливаем область под линией
+                    }]
+                },
+                options: {
+                    responsive: true, // Делаем диаграмму адаптивной
+                    scales: {
+                        y: {
+                            beginAtZero: true // Начинаем ось Y с нуля
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+    <div>
+        <div style="width: 80%; margin: auto;">
+        <!-- Создаем контейнер для диаграммы -->
+        <canvas id="myChart2"></canvas>
+        </div>
+
+        <script>
+            // Получаем контекст рисования для элемента canvas
+            var ctx = document.getElementById('myChart2').getContext('2d');
+
+            // Массив с данными для диаграммы (здесь можно использовать ваши данные)
+            var data = {{counts_likes}};
+
+            // Создаем новый объект Chart и передаем контекст рисования
+            var myChart = new Chart(ctx, {
+                type: 'line', // Указываем тип диаграммы (линейная)
+                data: {
+                    labels: Array.from({length: data.length}, (_, i) => i + 1), // Метки оси X (1, 2, 3, ..., 50)
+                    datasets: [{
+                        label: 'Изменение количества лайков', // Название набора данных
+                        data: data, // Данные для построения диаграммы
+                        borderColor: 'purple', // Цвет линии
+                        borderWidth: 1, // Толщина линии
+                        fill: false // Не заливаем область под линией
+                    }]
+                },
+                options: {
+                    responsive: true, // Делаем диаграмму адаптивной
+                    scales: {
+                        y: {
+                            beginAtZero: true // Начинаем ось Y с нуля
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+    <div>
+        <div style="width: 80%; margin: auto;">
+        <!-- Создаем контейнер для диаграммы -->
+        <canvas id="myChart3"></canvas>
+        </div>
+
+        <script>
+            // Получаем контекст рисования для элемента canvas
+            var ctx = document.getElementById('myChart3').getContext('2d');
+
+            // Массив с данными для диаграммы (здесь можно использовать ваши данные)
+            var data = {{counts_comments}};
+
+            // Создаем новый объект Chart и передаем контекст рисования
+            var myChart = new Chart(ctx, {
+                type: 'line', // Указываем тип диаграммы (линейная)
+                data: {
+                    labels: Array.from({length: data.length}, (_, i) => i + 1), // Метки оси X (1, 2, 3, ..., 50)
+                    datasets: [{
+                        label: 'Изменение количества комментариев', // Название набора данных
+                        data: data, // Данные для построения диаграммы
+                        borderColor: 'red', // Цвет линии
+                        borderWidth: 1, // Толщина линии
+                        fill: false // Не заливаем область под линией
+                    }]
+                },
+                options: {
+                    responsive: true, // Делаем диаграмму адаптивной
+                    scales: {
+                        y: {
+                            beginAtZero: true // Начинаем ось Y с нуля
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+    <div class="video-container">
+        <div class="video-wrapper">
+            <div class="video-caption">Самое просматриваемое видео</div>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{most_views_video}}"  frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="video-wrapper">
+            <div class="video-caption">Видео с самым большим количеством лайков</div>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{most_likes_video}}" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+</body>
+</html>
